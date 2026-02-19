@@ -1,13 +1,16 @@
 package com.example.myapplicationvolley
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,16 +28,54 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cargarHttpPosts(){
+
         val queue = Volley.newRequestQueue(this)
-        val url: String = "https://jsonplaceholder.typicode.com/posts"
-        val strintRequest = StringRequest(com.android.volley.Request.Method.GET, url,
-            Response.Listener<String>{ response ->
-                //mapeado o en list --- objeto.
-                println("Los datos ${response}")
+        val url = "https://jsonplaceholder.typicode.com/posts"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,
+            url,
+            { response ->
+                //val parsearPostsClass: vienModelJsonplaceHOlder
+                val listaPosts = parsearPosts(response)
+                println("DAtaaaaaaaaa")
+                println(listaPosts)
+                println("DAtaaaaaaaaa FInnnnn")
+                //adapter.submitList(listaPosts) // RecyclerView
             },
-            Response.ErrorListener { println("Erro en la peticion") })
-        queue.add(strintRequest)
+            { error ->
+                Log.e("VOLLEY", "Error en la petición", error)
+            }
+        )
+
+        queue.add(stringRequest)
     }
+
+    // tarea es la VIEW en recircleyView
+
+
+    //response
+    fun parsearPosts(response: String): List<Post> {
+        val lista = mutableListOf<Post>()
+        val jsonArray = JSONArray(response)
+
+        for (i in 0 until jsonArray.length()) {
+            val obj = jsonArray.getJSONObject(i)
+
+            val post = Post(
+                userId = obj.getInt("userId"),
+                id = obj.getInt("id"),
+                title = obj.getString("title"),
+                body = obj.getString("body")
+            )
+
+            lista.add(post)
+        }
+
+        return lista
+    }
+
+    // VIew en recirclerView
 
 
 }
