@@ -33,4 +33,21 @@ class PostsRepository {
         })
 
     }
+
+    fun createPost(post: PostModel, callback: (PostModel) -> Unit, errorCallback: (Throwable) -> Unit) {
+        apiServices.createPost(post).enqueue(object : Callback<PostModel> {
+            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                if (response.isSuccessful) {
+                    callback(response.body()!!)
+                    //callback() cuando solo devuelve un 200, ok sin cuerpo.
+                } else {
+                    errorCallback(Throwable("Error en la respuesta"))
+                }
+            }
+
+            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+                errorCallback(t)
+            }
+        })
+    }
 }

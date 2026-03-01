@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.myaplicationmvvm.data.model.PostModel
 import com.example.myaplicationmvvm.ui.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -21,8 +22,16 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        setupObservers()
-        loadPosts()
+
+        //setupObservers()
+        //loadPosts()
+        setupObserversSave()
+
+        //intancia del objeto.
+        //val txt = txt.finvie(R.id.txt1)
+        //txt.text.toInt
+        val newPost = PostModel(1, 12,"Nuevo Post", "Contenido del post")
+        postViewModel.addPost(newPost)
     }
 
 
@@ -50,4 +59,23 @@ class MainActivity : AppCompatActivity() {
     private fun loadPosts() {
         postViewModel.getPosts() // Carga los posts
     }
+
+    //Realizar el CRUD de post, manejo de estados response , request, UI save, edit, alert dialog.
+    //Listado de post con un buscador,
+    //puntos extras el manejo de frament.
+
+    private fun setupObserversSave() {
+        postViewModel.result.observe(this) { isSuccess ->
+            if (isSuccess) {
+                Log.d("Post", "Post guardado exitosamente")
+                // Actualiza la UI para reflejar el éxito
+            } else {
+                Log.e("Post", "Error al guardar el post")
+                // Muestra un mensaje de error en la UI
+            }
+        }
+
+
+    }
+
 }
