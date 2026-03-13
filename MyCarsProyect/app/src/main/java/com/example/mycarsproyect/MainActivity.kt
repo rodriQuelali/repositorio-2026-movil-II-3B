@@ -1,5 +1,6 @@
 package com.example.mycarsproyect
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.mycarsproyect.databinding.ActivityLoginBinding
 import com.example.mycarsproyect.databinding.ActivityMainBinding
+import com.example.mycarsproyect.ui.login.LoginActivity
+import com.example.mycarsproyect.ui.user.UserMainActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +33,15 @@ class MainActivity : AppCompatActivity() {
         var ceunta = binding.crearCuenta
 
         butIni.setOnClickListener {
-            Toast.makeText(this, "Hola Login", Toast.LENGTH_SHORT).show()
+            //llamamos a login
+            val i = Intent(this, LoginActivity::class.java)
+            startActivity(i)
+            //Toast.makeText(this, "Hola Login", Toast.LENGTH_SHORT).show()
+        }
+
+        ceunta.setOnClickListener {
+            val i = Intent(this, UserMainActivity::class.java)
+            startActivity(i)
         }
 
     }
