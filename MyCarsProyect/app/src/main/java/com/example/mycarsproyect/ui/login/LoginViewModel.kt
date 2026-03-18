@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.example.mycarsproyect.data.LoginRepository
-import com.example.mycarsproyect.data.Result
+import com.example.mycarsproyect.data.login.repository.LoginRepository
+import com.example.mycarsproyect.data.login.model.Result
 
 import com.example.mycarsproyect.R
 

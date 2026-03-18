@@ -1,4 +1,4 @@
-package com.example.mycarsproyect.data
+package com.example.mycarsproyect.data.login.model
 
 /**
  * A generic class that holds a value with its loading status.
