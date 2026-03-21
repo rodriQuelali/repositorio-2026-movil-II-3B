@@ -4,41 +4,39 @@ import android.content.Context
 import com.example.mycarsproyect.data.remote.ApiClient
 import com.example.mycarsproyect.data.user.model.User
 import com.example.mycarsproyect.data.user.model.UserResponse
+import com.example.mycarsproyect.data.login.model.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.example.mycarsproyect.data.login.model.Result
 import java.io.IOException
 
-class UserDataSource  (private val context: Context){
+class UserDataSource(private val context: Context) {
 
-    /**
-     * Registra un nuevo usuario.
-     * Retorna Result.Success con los datos del usuario si el status es 201.
-     */
     suspend fun registerUser(user: User): Result<UserResponse> {
-        return try {
-            println("Enviar datos de user email: ${user.email}")
+        return withContext(Dispatchers.IO) {
+            try {
+                println("Enviando registro para: ${user.email}")
 
-            val response = withContext(Dispatchers.IO){
-                ApiClient.create(context).getRegisterUser(user)
-            }
+                // Llamada al API
+                val response = ApiClient.create(context).getRegisterUser(user)
 
-            if (response.isSuccessful && response.code() == 201) {
-                val userResponse = response.body()
-                if (userResponse != null) {
-                    println("Registro exitoso (201 Created): $userResponse")
-                    Result.Success(userResponse)
+                // Validación del Status 201 (Created)
+                if (response.isSuccessful && response.code() == 201) {
+                    val body = response.body()
+                    if (body != null) {
+                        Result.Success(body)
+                    } else {
+                        Result.Error(IOException("Error: Cuerpo de respuesta vacío"))
+                    }
                 } else {
-                    Result.Error(IOException("Error: Cuerpo de respuesta vacío"))
+                    // Manejo de errores de servidor (400, 409, 500, etc.)
+                    println("Error en servidor: Código ${response.code()}")
+                    Result.Error(IOException("Error ${response.code()}"))
                 }
-            } else {
-                println("Error en registro: Código ${response.code()}")
-                Result.Error(IOException("Error en el servidor: ${response.code()}"))
+            } catch (e: Exception) {
+                // Captura errores de red, timeout o falta de conexión
+                println("Error de red: ${e.message}")
+                Result.Error(IOException("Error en la conexión", e))
             }
-        } catch (e: Exception) {
-            // Manejo de errores de conexión o parsing
-            println("Error de conexión: ${e.message}")
-            Result.Error(IOException("Error en la conexión", e))
         }
     }
 }
