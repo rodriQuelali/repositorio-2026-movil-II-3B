@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycarsproyect.R
+import com.example.mycarsproyect.data.user.model.User
 import com.example.mycarsproyect.databinding.ActivityUserMainBinding
 import com.example.mycarsproyect.ui.login.LoginActivity
 
@@ -108,6 +109,17 @@ class UserMainActivity : AppCompatActivity() {
             email.addTextChangedListener(afterTextChangedListener)
             password.addTextChangedListener(afterTextChangedListener)
 
+        // 6. Acción del botón de registro
+        registroButton.setOnClickListener {
+            val userRequest = User(
+                first_name = firstName.text.toString(),
+                last_name = lastName.text.toString(),
+                email = email.text.toString(),
+                password = password.text.toString()
+            )
+            // Llama a la función de registro en el ViewModel (inicia la corrutina)
+            userViewModel.registerUser(userRequest)
+        }
 
             //TODO fin onCreate
 
