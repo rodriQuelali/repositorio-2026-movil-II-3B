@@ -11,4 +11,9 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="error_registro">Error al registro de usuario</string>
+
+    <string name="erro_firstName">Llenar el campo de firstName</string>
+    <string name="erro_lastName">Llenar el campo de lastName</string>
+    <string name="erro_email">Llenar el campo de email</string>
+    <string name="erro_password">Llenar el campo de password</string>
 </resources>
