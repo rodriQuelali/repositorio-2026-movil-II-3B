@@ -1,6 +1,7 @@
 package com.example.mycarsproyect.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -34,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login as MaterialButton
         val loading = binding.loading
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(this))
             .get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
@@ -59,6 +60,9 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
+                //llamar al inicio de registro de card o registro de autos.
+                //var i = Intent(this, CpanelCard::class.java)
+                //startActivity(i)
                 updateUiWithUser(loginResult.success)
             }
             setResult(Activity.RESULT_OK)
