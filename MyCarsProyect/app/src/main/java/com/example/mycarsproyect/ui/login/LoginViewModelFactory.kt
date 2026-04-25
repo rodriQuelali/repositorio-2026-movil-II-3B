@@ -18,7 +18,8 @@ class LoginViewModelFactory(private val context: Context) : ViewModelProvider.Fa
             return LoginViewModel(
                 loginRepository = LoginRepository(
                     dataSource = LoginDataSource(context)
-                )
+                ),
+                context = context
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

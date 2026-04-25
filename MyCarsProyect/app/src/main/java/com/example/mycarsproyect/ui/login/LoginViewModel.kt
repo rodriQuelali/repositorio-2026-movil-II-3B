@@ -7,11 +7,16 @@ import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.mycarsproyect.data.login.repository.LoginRepository
 import com.example.mycarsproyect.data.login.model.Result
+import android.content.Context
+import com.example.mycarsproyect.utils.NotificationHelpers
 
 import com.example.mycarsproyect.R
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(
+    private val loginRepository: LoginRepository,
+    private val context: Context
+) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -28,9 +33,15 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
             if (result is Result.Success) {
                 _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                    LoginResult(
+                        success = LoggedInUserView(displayName = result.data.displayName)
+                    )
+                NotificationHelpers.showNotification(context, "login correcto")
             } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
+                _loginResult.value = LoginResult(
+                    error = R.string.login_failed
+                )
+                NotificationHelpers.showNotification(context, "inicio de session incorrecto")
             }
         }
 

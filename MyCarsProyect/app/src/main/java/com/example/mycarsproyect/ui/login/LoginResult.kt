@@ -5,5 +5,6 @@ package com.example.mycarsproyect.ui.login
  */
 data class LoginResult(
     val success: LoggedInUserView? = null,
-    val error: Int? = null
+    val error: Int? = null,
+    val notificationMessage: String? = null
 )

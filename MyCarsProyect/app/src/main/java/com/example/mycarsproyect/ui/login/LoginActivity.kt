@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import com.example.mycarsproyect.databinding.ActivityLoginBinding
+import com.example.mycarsproyect.utils.NotificationHelpers
 
 import com.example.mycarsproyect.R
 import com.google.android.material.button.MaterialButton
@@ -56,14 +57,16 @@ class LoginActivity : AppCompatActivity() {
             val loginResult = it ?: return@Observer
 
             loading.visibility = View.GONE
+            loginResult.notificationMessage?.let { message ->
+                //NotificationHelpers.showNotification(this, message)
+            }
+            
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                //llamar al inicio de registro de card o registro de autos.
-                //var i = Intent(this, CpanelCard::class.java)
-                //startActivity(i)
                 updateUiWithUser(loginResult.success)
+                //NotificationHelpers.showNotification(this, "Login correcto")
             }
             setResult(Activity.RESULT_OK)
 
