@@ -25,4 +25,7 @@ class Heroe{
   String toString(){
     return "nombre: $nombre, poder: $poder";
   }
+
+
+  
 }
