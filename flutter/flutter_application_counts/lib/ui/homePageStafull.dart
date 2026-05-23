@@ -13,6 +13,7 @@ class _HomePageStafullState extends State<HomePageStafull> {
 
   //tarea
   //realizar el decremento, con otro floatingActionButton
+  //con--;
 
   int _con = 0;
 
