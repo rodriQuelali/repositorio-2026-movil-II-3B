@@ -28,6 +28,14 @@ class _HomePageStafullState extends State<HomePageStafull> {
    
   }
 
+  void _decremento(){
+    setState(() {
+       //con = con -1;
+       _con--;
+    });
+   
+  }
+
   
   @override
   Widget build(BuildContext context) {
@@ -77,7 +85,7 @@ class _HomePageStafullState extends State<HomePageStafull> {
               Icons.add,
               color: Colors.white,),
           ),
-          floatingActionButton: FloatingActionButton(
+          FloatingActionButton(
           onPressed: (){_decremento();},
           
           backgroundColor: const Color.fromARGB(255, 46, 48, 49),
