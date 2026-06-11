@@ -1,6 +1,7 @@
 
 //los estados de mi diseño.
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class HomePageCalculator extends StatefulWidget {
@@ -15,6 +16,10 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
 
   // Controlador para capturar el valor de la caja de texto
   TextEditingController txtNumeroController = TextEditingController();
+  String verValor = "Ver Operación";
+
+  String valorTexto = "";
+  String verResultado = "Ver Resultado";
 
   // Colores principales para el tema oscuro
   final Color bgColor = const Color(0xFF1A1A1A);
@@ -42,8 +47,8 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text(
-                    "Ver Operación",
+                  Text(
+                    '$verValor',
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
@@ -64,8 +69,8 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Resultado",
+                  Text(
+                    '$verResultado',
                     style: TextStyle(color: Colors.white54, fontSize: 20),
                   ),
                 ],
@@ -98,10 +103,20 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildButton("7", btnColor: btnNumColor),
-          _buildButton("4", btnColor: btnNumColor),
-          _buildButton("1", btnColor: btnNumColor),
-          _buildButton(",", btnColor: btnActionColor),
+          _buildButton("7", btnColor: btnNumColor, onPressed: (){
+            
+            txtNumeroController.text += "7";
+
+          }),
+          _buildButton("4", btnColor: btnNumColor, onPressed:(){
+            txtNumeroController.text += "4";
+          }),
+          _buildButton("1", btnColor: btnNumColor, onPressed:(){
+            txtNumeroController.text += "1";
+          }),
+          _buildButton(",", btnColor: btnActionColor, onPressed: (){
+            txtNumeroController.text += ",";
+          }),
         ],
       ),
     );
@@ -112,10 +127,18 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildButton("8", btnColor: btnNumColor),
-          _buildButton("5", btnColor: btnNumColor),
-          _buildButton("2", btnColor: btnNumColor),
-          _buildButton("0", btnColor: btnNumColor),
+          _buildButton("8", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "8";
+          }),
+          _buildButton("5", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "5";
+          }),
+          _buildButton("2", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "2";
+          }),
+          _buildButton("0", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "0";
+          }),
         ],
       ),
     );
@@ -126,16 +149,27 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildButton("9", btnColor: btnNumColor),
-          _buildButton("6", btnColor: btnNumColor),
-          _buildButton("3", btnColor: btnNumColor),
+          _buildButton("9", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "9";
+          }),
+          _buildButton("6", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "6";
+          }),
+          _buildButton("3", btnColor: btnNumColor, onPressed: (){
+            txtNumeroController.text += "3";
+          }),
           _buildButton("=", btnColor: btnOpColor, onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
+            //tarea para el resta, y limpiar los valores.
+
+            setState(() {
+              verResultado = "Resultado: ${double.parse(txtNumeroController.text) + double.parse(valorTexto)}";
+            });
+            /*ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Valor de la caja de texto: ${txtNumeroController.text}'),
                 backgroundColor: btnOpColor,
               ),
-            );
+            );*/
           }),
         ],
       ),
@@ -150,7 +184,14 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
           _buildButton("÷", btnColor: btnActionColor, txtColor: btnOpColor),
           _buildButton("×", btnColor: btnActionColor, txtColor: btnOpColor),
           _buildButton("-", btnColor: btnActionColor, txtColor: btnOpColor),
-          _buildButton("+", btnColor: btnActionColor, txtColor: btnOpColor),
+          _buildButton("+", btnColor: btnActionColor, txtColor: btnOpColor, onPressed: (){
+            //la seleccion dela operacion
+            valorTexto = txtNumeroController.text;
+            setState(() {
+              verValor = txtNumeroController.text + "+";
+              txtNumeroController.text = "";
+            });
+          }),
         ],
       ),
     );
