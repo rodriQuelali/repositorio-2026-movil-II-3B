@@ -3,6 +3,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_calculator/class/Calculadora.dart';
 
 class HomePageCalculator extends StatefulWidget {
   const HomePageCalculator({super.key});
@@ -20,6 +21,8 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
 
   String valorTexto = "";
   String verResultado = "Ver Resultado";
+
+  String operacionSeleccionada = ""; // Variable para almacenar la operación seleccionada
 
   // Colores principales para el tema oscuro
   final Color bgColor = const Color(0xFF1A1A1A);
@@ -162,7 +165,17 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
             //tarea para el resta, y limpiar los valores.
 
             setState(() {
-              verResultado = "Resultado: ${double.parse(txtNumeroController.text) + double.parse(valorTexto)}";
+              if(operacionSeleccionada == "+") {
+
+                Calculadora calculadora = Calculadora(valorTexto, txtNumeroController.text);
+                verValor += txtNumeroController.text;
+                verResultado = "Resultado: ${calculadora.sumar()}";
+
+              }if(operacionSeleccionada == "-") {
+                verResultado = "Resultado: ${double.parse(valorTexto) - double.parse(txtNumeroController.text)}";
+              }
+
+              txtNumeroController.text = "";
             });
             /*ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -183,9 +196,18 @@ class _HomePageCalculatorState extends State<HomePageCalculator> {
         children: [
           _buildButton("÷", btnColor: btnActionColor, txtColor: btnOpColor),
           _buildButton("×", btnColor: btnActionColor, txtColor: btnOpColor),
-          _buildButton("-", btnColor: btnActionColor, txtColor: btnOpColor),
+          _buildButton("-", btnColor: btnActionColor, txtColor: btnOpColor, onPressed: (){
+            //la seleccion dela operacion
+            operacionSeleccionada = "-";
+            valorTexto = txtNumeroController.text;
+            setState(() {
+              verValor = txtNumeroController.text + "-";
+              txtNumeroController.text = "";
+            });
+          }),
           _buildButton("+", btnColor: btnActionColor, txtColor: btnOpColor, onPressed: (){
             //la seleccion dela operacion
+            operacionSeleccionada = "+";
             valorTexto = txtNumeroController.text;
             setState(() {
               verValor = txtNumeroController.text + "+";
