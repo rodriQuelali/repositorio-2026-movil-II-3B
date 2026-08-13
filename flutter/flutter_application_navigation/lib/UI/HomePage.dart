@@ -20,12 +20,9 @@ class _HomePageState extends State<HomePage> {
         child: TextButton(
           onPressed: () {
             // Handle button press
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailPage()),
-            );
+             Navigator.pushNamed(context, '/details');
           },
-          child: Text("Go to Next Page"),
+          child: Text("Go to Next Page Dalis"),
         ),
       ),
     );

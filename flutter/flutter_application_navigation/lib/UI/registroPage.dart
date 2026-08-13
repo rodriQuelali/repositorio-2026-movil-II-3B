@@ -1,20 +1,18 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_navigation/UI/HomePage.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class RegistroPage extends StatefulWidget {
+  const RegistroPage({super.key});
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<RegistroPage> createState() => _RegistroPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _RegistroPageState extends State<RegistroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Page"),
+        title: Text("Registro Page"),
       ),
       body: Center(
         child: TextButton(
@@ -22,7 +20,7 @@ class _DetailPageState extends State<DetailPage> {
             // Handle button press
             Navigator.pushNamed(context, '/');
           },
-          child: Text("Go to Next Details page"),
+          child: Text("Go to Next Registro page"),
         ),
       ),
     );
