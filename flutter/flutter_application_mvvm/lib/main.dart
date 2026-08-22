@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mvvm/view/home_page_view.dart';
 import 'package:flutter_application_mvvm/view/login_view.dart';
+import 'package:flutter_application_mvvm/view/register_view.dart';
 import 'package:flutter_application_mvvm/viewmodel/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const LoginView(),
           '/home': (context) => const HomePage(),
+          '/register': (context) => const RegisterView(),
         },
       ),
     );

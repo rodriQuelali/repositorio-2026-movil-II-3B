@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_application_mvvm/view/home_page_view.dart';
+import 'package:flutter_application_mvvm/viewmodel/auth_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 // Clase de Colores para el diseño del Login
 class LoginColors {
@@ -34,6 +38,23 @@ class _LoginViewState extends State<LoginView> {
   bool _obscurePassword = true;
   bool _rememberPassword = false;
 
+  //funcion de logueo
+  Future<void> _doLogin() async {
+    final vm = context.read<AuthViewModel>();
+    final success = await vm.login(_emailController.text, _passwordController.text);
+
+    if (success && mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );
+    } else if (vm.errorMessage != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(vm.errorMessage!), backgroundColor: Colors.red),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -54,12 +75,12 @@ class _LoginViewState extends State<LoginView> {
       backgroundColor: LoginColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
-            decoration: BoxDecoration(
-              color: LoginColors.background,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
             ),
-            child: Column(
+           child: IntrinsicHeight(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Header con botón de retroceso
@@ -263,7 +284,7 @@ class _LoginViewState extends State<LoginView> {
                 // Opciones de recordar y olvidar contraseña
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
@@ -327,7 +348,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Implementar lógica de login
+                        _doLogin();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: LoginColors.primary,
@@ -382,7 +403,47 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 
                 const SizedBox(height: 24),
+              
+              //registro 
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: LoginColors.secondary,
+                        side: const BorderSide(
+                          color: LoginColors.border,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          
+                          const SizedBox(width: 12),
+                          const Text(
+                            'Registrarse',
+                            style: TextStyle(
+                              color: LoginColors.textPrimary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 
+                const SizedBox(height: 16),
                 // Botón Google
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -424,9 +485,10 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 
-                const Spacer(),
+                SizedBox(height: 24),
               ],
             ),
+          ),
           ),
         ),
       ),
