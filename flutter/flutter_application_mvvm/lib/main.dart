@@ -3,6 +3,7 @@ import 'package:flutter_application_mvvm/view/home_page_view.dart';
 import 'package:flutter_application_mvvm/view/login_view.dart';
 import 'package:flutter_application_mvvm/view/register_view.dart';
 import 'package:flutter_application_mvvm/viewmodel/auth_viewmodel.dart';
+import 'package:flutter_application_mvvm/viewmodel/post_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
-        
+        ChangeNotifierProvider(create: (_) => PostViewModel()..fetchPosts()),
       ],
       child: MaterialApp(
         title: 'Aplicaction the MVVM',
