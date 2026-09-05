@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_application_mvvm/view/homeContainer.dart';
 import 'package:flutter_application_mvvm/view/home_page_view.dart';
 import 'package:flutter_application_mvvm/view/post_list_view.dart';
 import 'package:flutter_application_mvvm/viewmodel/auth_viewmodel.dart';
@@ -47,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
     if (success && mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const PostListView()),
+        MaterialPageRoute(builder: (_) => HomeContainer()),
       );
     } else if (vm.errorMessage != null && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
