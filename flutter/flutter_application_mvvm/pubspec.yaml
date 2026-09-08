@@ -37,6 +37,10 @@ dependencies:
   intl: ^0.19.0           # Formatear fecha de nacimiento
   dio: ^5.5.0                # Cliente HTTP con soporte de interceptores (ideal para tokens)
   flutter_secure_storage: ^9.2.2   # Guardar el token de forma segura
+  path_provider: ^2.1.4      # Carpeta de almacenamiento de la app
+  image_picker: ^1.1.2       # Acceso a la cámara
+  geolocator: ^13.0.2        # Acceso al GPS (latitud/longitud)
+  url_launcher: ^6.3.1       # Abrir la ubicación en Google Maps
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
