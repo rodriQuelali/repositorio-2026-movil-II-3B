@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_mvvm/view/home_page_view.dart';
+import 'package:flutter_application_mvvm/view/pedido_list_view.dart';
 import 'package:flutter_application_mvvm/view/post_list_view.dart';
-import 'package:flutter_application_mvvm/view/registro_page.dart';
+
 
 
 class HomeContainer extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomeContainerState extends State<HomeContainer> {
   List<Widget> _listaContenidos =[
     HomePage(), //0
     PostListView(), //1
-    ListaPedidosPage() //2
+    PedidoListView() //2
     //maximo hasta 5 
   ];
 
@@ -40,6 +41,7 @@ class _HomeContainerState extends State<HomeContainer> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            
             IconButton(onPressed: 
             (){
               setState(() {
