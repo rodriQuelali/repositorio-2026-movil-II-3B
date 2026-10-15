@@ -10,4 +10,7 @@ class Calculadora(
     }
 
     fun restas(a: Double, b: Double): Double = a - b
+
+    fun suma(): Int = this.numero1 + this.numero2
+
 }
