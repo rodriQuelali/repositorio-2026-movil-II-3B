@@ -36,15 +36,18 @@ class CalculadoraUnitTest {
         }
     }
 
+    lateinit var cal : Calculadora
+
     @Before
     fun setup(){
         println("-------------------setup")
+        cal = Calculadora(2,2)
     }
 
     @Test
     fun test_resta(){
-        val calculadora = Calculadora(2,2)
-        val res = calculadora.restas(2.2, 2.1)
+
+        val res = cal.restas(2.2, 2.1)
         println(".......... ${res}")
         assertEquals(0.10000000000000009, res, 0.0)
     }
